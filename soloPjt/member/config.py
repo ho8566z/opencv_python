@@ -1,0 +1,8 @@
+SIGN_UP     = 1
+SIGN_IN     = 2
+SIGN_OUT    = 3
+MODIFY      = 4
+DELETE      = 5
+SYSTEM_END = 99
+
+MEMBER_DELETE_Y = 'Y'

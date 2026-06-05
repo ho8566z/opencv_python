@@ -46,7 +46,7 @@ while formula_oneMov.isOpened():            #동영상 파일이 연결되어 �
         print('END FRAME')
         break
 
-    frame = cv2.resize(frame, (1060, 600))
+    frame = cv2.resize(frame, (400, 600))
 
     print(f'frame: {frame}')
     cv2.imshow('title-formula_oneFrame', frame)     #매우 빠르게 frame(이미지)가 출력됨

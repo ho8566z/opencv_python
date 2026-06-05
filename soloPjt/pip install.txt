@@ -1,0 +1,5 @@
+numpy: 
+	https://hoazzinews.tistory.com/76
+
+cv2:
+	https://datacodingschool.tistory.com/54#google_vignette

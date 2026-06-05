@@ -1,0 +1,5 @@
+DEV_MOD         = True
+
+MEMBER_SERVICE  = 1
+IMAGE_DIARY     = 2
+SYSTEM_END      = 99

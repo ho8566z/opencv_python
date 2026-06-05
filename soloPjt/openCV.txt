@@ -1,0 +1,55 @@
+import cv2
+import numpy as np
+
+
+# 이미지 불러와서 출력하기: 펙셀스(https://www.pexels.com/ko-kr/)
+'''
+formula_oneImg = cv2.imread('./res/img/formula_one.jpg')    #이미지 읽기
+print(f'formula_oneImg shape: {formula_oneImg.shape}')      #이미지 크기: (4121, 6179, 3)
+
+formula_oneImg = cv2.resize(formula_oneImg, (600, 360))     #이미지 크기 변경 (=가로, 세로, BGR)
+
+cv2.imshow('title-formula_oneImg', formula_oneImg)          #이미지 출력
+# cv2.waitKey(1000 * 3)                                     #'* n초' 동안 출력됨
+cv2.waitKey(0)                                              #어떤 키를 누를 때까지 기다려라
+cv2.destroyAllWindows()                                     #모든 창 닫기
+'''
+
+
+'''
+# 이미지 읽기 옵션
+formula_oneImgColor = cv2.imread('./res/img/formula_one.jpg', cv2.IMREAD_COLOR)
+formula_oneImgColor = cv2.resize(formula_oneImgColor, (600, 360))
+
+formula_oneImgGrey = cv2.imread('./res/img/formula_one.jpg', cv2.IMREAD_GRAYSCALE)
+formula_oneImgGrey = cv2.resize(formula_oneImgGrey, (600, 360))
+
+formula_oneImgUnchanged = cv2.imread('./res/img/formula_one.jpg', cv2.IMREAD_UNCHANGED)
+formula_oneImgUnchanged = cv2.resize(formula_oneImgUnchanged, (600, 360))
+
+cv2.imshow('title-formula_oneImgColor', formula_oneImgColor)            #BGR 유지
+cv2.imshow('title-formula_oneImgGrey', formula_oneImgGrey)              #GREYSCALE
+cv2.imshow('title-formula_oneImgUnchanged', formula_oneImgUnchanged)    #ALPHA 유지(투명 부분 유지)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+'''
+
+
+# 이미지 복사 및 저장
+'''
+formulaImgGreyscale = cv2.imread('./res/img/formula_one.jpg', cv2.IMREAD_GRAYSCALE)
+formulaImgGreyscale = cv2.resize(formulaImgGreyscale, (600, 360))
+
+cv2.imshow('title-./res/img/formula_one.jpg', formulaImgGreyscale)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+cv2.imwrite('./save/img/formula_gretsacle.jpg', formulaImgGreyscale)
+
+formulaImgGreyscale = cv2.imread('./res/img/formula_one.jpg', cv2.IMREAD_GRAYSCALE)
+formulaImgGreyscale = cv2.resize(formulaImgGreyscale, (600, 360))
+result = cv2.imwrite('./save/img/formula_gretsacle.jpg', formulaImgGreyscale)
+print(f'result: {result}')
+'''

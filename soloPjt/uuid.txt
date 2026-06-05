@@ -1,0 +1,19 @@
+import uuid
+
+
+            elif menuNum == bank_config.NEW_ACCOUNT:
+                self.accounts = self.load_accounts()
+                if session.getSignInedMemberId() not in self.accounts:
+                    self.accounts[session.getSignInedMemberId()] = {}
+
+                myAccounts = self.accounts[session.getSignInedMemberId()]
+                myAccounts[str(uuid.uuid4())] = {
+                    'balance': 0,
+                    'histories': []
+                }
+
+                self.save_accounts(self.accounts)
+                print('NEW-ACCOUNT SUCCESS!!')
+
+                if root_config.DEV_MOD:
+                    print(f'self.load_accounts(): {self.load_accounts()}')
