@@ -1,6 +1,8 @@
 from diary import config as dia_cf
 import config as root_cf
 import session as ss
+from datetime import datetime
+from util import util_time
 import os
 import json
 import uuid
@@ -65,12 +67,36 @@ class Image_Diary:
 
 ##=====================================================#
 
-    def input_Comment(self):
-        newComment = input('Diary 입력 :  ')
+    def input_Txt(self):
+        self.replaceDiary()
+        for idx, diary in enumerate(self.myDiarys):
+            print('=====================================================')
+            print(f'[{idx +1}] {diary}')
+
+        selected = int(input('Please Select the Number to Update :  '))
+        selected = cv2.imread(f'./ress/img/{selected}')
+        print(f'selected shape: {selected.shape}')
+        width = int(input('원하는 사진의 가로사이즈 :  '))
+        length = int(input('원하는 사진의 세로사이즈 :  '))
+        selectedSize = cv2.resize(selected, (width, length))
 
         self.replaceDiary()
-        self.myDiarys.insert(0, newComment)
+        newDiarryName = input('Diary_Name 입력 :  ')
+        newTxt = input('Diary_Txt 입력 :  ')
 
+        diary = {
+            'diaryName': newDiarryName,
+            'diaryTxt': newTxt,
+            'diaryRegDate': util_time.getCurrentTime(),
+            'diaryModDate': util_time.getCurrentTime()
+        }
+
+        self.myDiarys.insert(0, diary)
+
+        cv2.imshow(f'title-{diary['diaryName']}', selected)
+        print('q를 눌러 Diary를 닫아주세요.')
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
         self.re_saveDiary()
         print('WIRTE COMPLETE')
 
@@ -78,7 +104,7 @@ class Image_Diary:
 
 
     def diary_Write(self):
-        self.input_Comment()
+        self.input_Txt()
 
 ##=====================================================#
 
@@ -94,15 +120,15 @@ class Image_Diary:
 
 ##=====================================================#
 
-    def update_Comment(self):
+    def update_Txt(self):
         self.replaceDiary()
         for idx, diary in enumerate(self.myDiarys):
             print('=====================================================')
             print(f'[{idx +1}] {diary}')
 
         selected = int(input('Please Select the Number to Update :  '))
-        diary = input('Diary 입력 :  ')
-        self.myDiarys[selected -1] = diary
+        diaryTxt = input('Diary 입력 :  ')
+        self.myDiarys[selected -1] = diaryTxt
 
         self.re_saveDiary()
         print('업데이트 완료')
@@ -111,7 +137,7 @@ class Image_Diary:
 
 
     def diary_Update(self):
-        self.update_Comment()
+        self.update_Txt()
 
 ##=====================================================#
 
@@ -135,8 +161,10 @@ class Image_Diary:
 ##=====================================================#
     def uuid(self):
         pass
+
     def openCV(self):
-        pass
+        
+
 ##=====================================================#
 ##=====================================================#
 
