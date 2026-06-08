@@ -1,7 +1,7 @@
 from diary import config as dia_cf
 import config as root_cf
 import session as ss
-from datetime import datetime
+from pathlib import Path
 from util import util_time
 import os
 import json
@@ -73,15 +73,28 @@ class Image_Diary:
             print('=====================================================')
             print(f'[{idx +1}] {diary}')
 
-        selected = int(input('Please Select the Number to Update :  '))
-        selected = cv2.imread(f'./ress/img/{selected}')
+        # listDir = Path('./ress/img')
+        # print(f'Img 목록: {listDir}')
+        # for img in listDir:
+        #     print(img)
+
+        impPath = './ress/img'
+
+        allImg = os.listdir(impPath)
+        print(f'Img 목록: {impPath}')
+        for imgFile in allImg:
+            if imgFile.lower().endswith(('.jpg', 'jpeg')):
+                print(imgFile)
+
+        selected = int(input('Please Select the Number to Write :  '))
+        selected = cv2.imread(f'./ress/img/{selected}.jpg')
         print(f'selected shape: {selected.shape}')
-        width = int(input('원하는 사진의 가로사이즈 :  '))
-        length = int(input('원하는 사진의 세로사이즈 :  '))
+        width = int(input('Diary의 가로사이즈 :  '))
+        length = int(input('Diary의 세로사이즈 :  '))
         selectedSize = cv2.resize(selected, (width, length))
 
         self.replaceDiary()
-        newDiarryName = input('Diary_Name 입력 :  ')
+        newDiarryName = self.diary[str(uuid.uuid4())]
         newTxt = input('Diary_Txt 입력 :  ')
 
         diary = {
@@ -93,7 +106,7 @@ class Image_Diary:
 
         self.myDiarys.insert(0, diary)
 
-        cv2.imshow(f'title-{diary['diaryName']}', selected)
+        cv2.imshow(f'title-{diary['diaryName']}', selectedSize)
         print('q를 눌러 Diary를 닫아주세요.')
         cv2.waitKey(0)
         cv2.destroyAllWindows()
@@ -114,6 +127,18 @@ class Image_Diary:
             print('=====================================================')
             print(f'[{idx +1}] {diary}')
 
+        selected = int(input('Please Select the Number to Write :  '))
+        selected = cv2.imread(f'./ress/img/{selected}')
+        print(f'selected shape: {selected.shape}')
+        width = int(input('Diary의 가로사이즈 :  '))
+        length = int(input('Diary의 세로사이즈 :  '))
+        selectedSize = cv2.resize(selected, (width, length))
+        
+        cv2.imshow(f'title-{diary['diaryName']}', selectedSize)
+        print('q를 눌러 Diary를 닫아주세요.')
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
 
     def diary_Read(self):
         self.opend_Diary()
@@ -127,8 +152,30 @@ class Image_Diary:
             print(f'[{idx +1}] {diary}')
 
         selected = int(input('Please Select the Number to Update :  '))
-        diaryTxt = input('Diary 입력 :  ')
-        self.myDiarys[selected -1] = diaryTxt
+        selected = cv2.imread(f'./ress/img/{selected}')
+        print(f'selected shape: {selected.shape}')
+        width = int(input('Diary의 가로사이즈 :  '))
+        length = int(input('Diary의 세로사이즈 :  '))
+        selectedSize = cv2.resize(selected, (width, length))
+
+        diaryName = self.newDiarryName
+
+        self.replaceDiary()
+        newTxt = input('Diary_Txt 입력 :  ')
+
+        diary = {
+            'diaryName': diaryName,
+            'diaryTxt': newTxt,
+            'diaryRegDate': util_time.getCurrentTime(),
+            'diaryModDate': util_time.getCurrentTime()
+        }
+
+        self.myDiarys.insert(0, diary)
+
+        cv2.imshow(f'title-{diary['diaryName']}', selectedSize)
+        print('q를 눌러 Diary를 닫아주세요.')
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
         self.re_saveDiary()
         print('업데이트 완료')
@@ -157,15 +204,6 @@ class Image_Diary:
     def diary_Delete(self):
         self.selec_Delete()
 
-##=====================================================#
-##=====================================================#
-    def uuid(self):
-        pass
-
-    def openCV(self):
-        
-
-##=====================================================#
 ##=====================================================#
 
     def run(self):
