@@ -1,7 +1,6 @@
 from diary import config as dia_cf
 import config as root_cf
 import session as ss
-from pathlib import Path
 from util import util_time
 import os
 import json
@@ -73,13 +72,7 @@ class Image_Diary:
             print('=====================================================')
             print(f'[{idx +1}] {diary}')
 
-        # listDir = Path('./ress/img')
-        # print(f'Img 목록: {listDir}')
-        # for img in listDir:
-        #     print(img)
-
         impPath = './ress/img'
-
         allImg = os.listdir(impPath)
         print(f'Img 목록: {impPath}')
         for imgFile in allImg:
@@ -94,11 +87,11 @@ class Image_Diary:
         selectedSize = cv2.resize(selected, (width, length))
 
         self.replaceDiary()
-        newDiarryName = self.diary[str(uuid.uuid4())]
+        self.newDiarryName = self.diary[str(uuid.uuid4())]
         newTxt = input('Diary_Txt 입력 :  ')
 
         diary = {
-            'diaryName': newDiarryName,
+            'diaryName': self.newDiarryName,
             'diaryTxt': newTxt,
             'diaryRegDate': util_time.getCurrentTime(),
             'diaryModDate': util_time.getCurrentTime()
@@ -106,7 +99,7 @@ class Image_Diary:
 
         self.myDiarys.insert(0, diary)
 
-        cv2.imshow(f'title-{diary['diaryName']}', selectedSize)
+        cv2.imshow(f'title-{diary["diaryName"]}', selectedSize)
         print('q를 눌러 Diary를 닫아주세요.')
         cv2.waitKey(0)
         cv2.destroyAllWindows()
@@ -134,7 +127,7 @@ class Image_Diary:
         length = int(input('Diary의 세로사이즈 :  '))
         selectedSize = cv2.resize(selected, (width, length))
         
-        cv2.imshow(f'title-{diary['diaryName']}', selectedSize)
+        cv2.imshow(f'title-{diary["diaryName"]}', selectedSize)
         print('q를 눌러 Diary를 닫아주세요.')
         cv2.waitKey(0)
         cv2.destroyAllWindows()
@@ -172,7 +165,7 @@ class Image_Diary:
 
         self.myDiarys.insert(0, diary)
 
-        cv2.imshow(f'title-{diary['diaryName']}', selectedSize)
+        cv2.imshow(f'title-{diary["diaryName"]}', selectedSize)
         print('q를 눌러 Diary를 닫아주세요.')
         cv2.waitKey(0)
         cv2.destroyAllWindows()
