@@ -1,0 +1,145 @@
+    def replaceDiary(self):
+        self.diarys = self.load_diary()
+        self.myDiarys = self.diarys[ss.getSignInId()]
+        
+
+    def checked_Dev(self):
+        if root_cf.DEV_MOD:
+            print(f'self.load_diary: {self.load_diary()}')
+
+
+    def re_saveDiary(self):
+        self.save_diary(self.diarys)
+
+##=====================================================#
+
+    def input_Txt(self):
+        self.replaceDiary()
+        for idx, diary in enumerate(self.myDiarys):
+            print('=====================================================')
+            print(f'[{idx +1}] {diary}')
+
+        impPath = './ress/img'
+        allImg = os.listdir(impPath)
+        print(f'Img 목록: {impPath}')
+        for imgFile in allImg:
+            if imgFile.lower().endswith(('.jpg', 'jpeg')):
+                print(imgFile)
+
+        selected = int(input('Please Select the Number to Write :  '))
+        selected = cv2.imread(f'./ress/img/{selected}.jpg')
+        print(f'selected shape: {selected.shape}')
+        width = int(input('Diary의 가로사이즈 :  '))
+        length = int(input('Diary의 세로사이즈 :  '))
+        selectedSize = cv2.resize(selected, (width, length))
+
+        self.replaceDiary()
+        self.newDiarryName = self.diary[str(uuid.uuid4())]
+        newTxt = input('Diary_Txt 입력 :  ')
+
+        diary = {
+            'diaryName': self.newDiarryName,
+            'diaryTxt': newTxt,
+            'diaryRegDate': util_time.getCurrentTime(),
+            'diaryModDate': util_time.getCurrentTime()
+        }
+
+        self.myDiarys.insert(0, diary)
+
+        cv2.imshow(f'title-{diary["diaryName"]}', selectedSize)
+        print('q를 눌러 Diary를 닫아주세요.')
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        self.re_saveDiary()
+        print('WIRTE COMPLETE')
+
+        self.checked_Dev()
+
+
+    def diary_Write(self):
+        self.input_Txt()
+
+##=====================================================#
+
+    def opend_Diary(self):
+        self.replaceDiary()
+        for idx, diary in enumerate(self.myDiarys):
+            print('=====================================================')
+            print(f'[{idx +1}] {diary}')
+
+        selected = int(input('Please Select the Number to Write :  '))
+        selected = cv2.imread(f'./ress/img/{selected}')
+        print(f'selected shape: {selected.shape}')
+        width = int(input('Diary의 가로사이즈 :  '))
+        length = int(input('Diary의 세로사이즈 :  '))
+        selectedSize = cv2.resize(selected, (width, length))
+        
+        cv2.imshow(f'title-{diary["diaryName"]}', selectedSize)
+        print('q를 눌러 Diary를 닫아주세요.')
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+
+    def diary_Read(self):
+        self.opend_Diary()
+
+##=====================================================#
+
+    def update_Txt(self):
+        self.replaceDiary()
+        for idx, diary in enumerate(self.myDiarys):
+            print('=====================================================')
+            print(f'[{idx +1}] {diary}')
+
+        selected = int(input('Please Select the Number to Update :  '))
+        selected = cv2.imread(f'./ress/img/{selected}')
+        print(f'selected shape: {selected.shape}')
+        width = int(input('Diary의 가로사이즈 :  '))
+        length = int(input('Diary의 세로사이즈 :  '))
+        selectedSize = cv2.resize(selected, (width, length))
+
+        diaryName = self.newDiarryName
+
+        self.replaceDiary()
+        newTxt = input('Diary_Txt 입력 :  ')
+
+        diary = {
+            'diaryName': diaryName,
+            'diaryTxt': newTxt,
+            'diaryRegDate': util_time.getCurrentTime(),
+            'diaryModDate': util_time.getCurrentTime()
+        }
+
+        self.myDiarys.insert(0, diary)
+
+        cv2.imshow(f'title-{diary["diaryName"]}', selectedSize)
+        print('q를 눌러 Diary를 닫아주세요.')
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+        self.re_saveDiary()
+        print('업데이트 완료')
+
+        self.checked_Dev()
+
+
+    def diary_Update(self):
+        self.update_Txt()
+
+##=====================================================#
+
+    def selec_Delete(self):
+        self.replaceDiary()
+        for idx, diary in enumerate(self.myDiarys):
+            print('=====================================================')
+            print(f'[{idx +1}] {diary}')
+
+        selected = int(input('Please Select the Number to Delete :  '))
+        self.myDiarys.pop(selected -1)
+        self.re_saveDiary()
+
+        self.checked_Dev()
+
+
+    def diary_Delete(self):
+        self.selec_Delete()
